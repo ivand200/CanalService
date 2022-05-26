@@ -2,9 +2,9 @@
 
 ## Запуск
 
-***python3 -m pip install -r requirements.txt***
-
-***python manage.py runserver 0.0.0.0:5000 --noreload***
+***sudo docker build -t canalservice .***
+***sudo docker run -it canalservice /bin/bash***
+***python manage/py runapscheduler***
 
 ## Таблица обновляеся с понедельника по пятницу в 10:00 часов
 

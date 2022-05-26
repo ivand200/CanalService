@@ -61,6 +61,19 @@ class Command(BaseCommand):
     scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
     scheduler.add_jobstore(DjangoJobStore(), "default")
 
+    scheduler.add_job(
+      validate_delivery, "cron",
+      day_of_week="mon-fri", hour=12,
+      end_date="2022-09-30"
+    )
+
+    scheduler.add_job(
+        sheet_update, "cron", 
+        day_of_week="mon-fri", 
+        hour=10, 
+        end_date="2022-09-30"
+    )
+
     # scheduler.add_job(
     #   my_job,
     #   trigger=CronTrigger(second="*/10"),  # Every 10 seconds
@@ -70,18 +83,18 @@ class Command(BaseCommand):
     # )
     # logger.info("Added job 'my_job'.")
 
-    scheduler.add_job(
-      delete_old_job_executions,
-      trigger=CronTrigger(
-        day_of_week="mon", hour="00", minute="00"
-      ),  # Midnight on Monday, before start of the next work week.
-      id="delete_old_job_executions",
-      max_instances=1,
-      replace_existing=True,
-    )
-    logger.info(
-      "Added weekly job: 'delete_old_job_executions'."
-    )
+    # scheduler.add_job(
+    #   delete_old_job_executions,
+    #   trigger=CronTrigger(
+    #     day_of_week="mon", hour="00", minute="00"
+    #   ),  # Midnight on Monday, before start of the next work week.
+    #   id="delete_old_job_executions",
+    #   max_instances=1,
+    #   replace_existing=True,
+    # )
+    # logger.info(
+    #   "Added weekly job: 'delete_old_job_executions'."
+    # )
 
     try:
       logger.info("Starting scheduler...")

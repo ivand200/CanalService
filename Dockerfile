@@ -9,6 +9,8 @@ RUN apt-get update
 
 WORKDIR /src 
 
+RUN apt-get update
+
 RUN pip install -r requirements.txt
 
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:5000", "--noreload"]
